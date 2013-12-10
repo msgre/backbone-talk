@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Backbone.js &amp; Marionette.js</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="plugin/highlight/styles/github.css">
+
+        <style>
+.strikeout {
+    position: relative;
+}
+.strikeout::after {
+    border-bottom: 10px solid #000;
+    content: "";
+    left: 35%;
+    position: absolute;
+    right: 36%;
+    top: 60%;
+}
+
+            pre code {
+                font-size: 120%;
+            }
+            .no-highlight {
+                color:#777;
+                font-weight:bold;
+            }
+            .circle {
+                display:inline-block;
+                width:150px;
+                height:150px;
+                -webkit-border-radius:100px;
+                border-radius:100px;
+                background:black;
+                color:white;
+            }
+            .reveal pre {
+                box-shadow:none;
+                width:100%;
+            }
+            .reveal pre code {
+                padding-left:1em;
+                padding-right:1em;
+            }
+            .reveal .model pre code {
+                background-color: #CBEFF3;
+            }
+            .reveal .model a {
+                color: #CBEFF3;
+            }
+            .reveal .view pre code {
+                background-color: #FFE6B2;
+            }
+            .reveal .view a {
+                color: #FFE6B2;
+            }
+            .reveal .events pre code {
+                background-color: #A7F0B7;
+            }
+            .reveal .events a {
+                color: #A7F0B7;
+            }
+            .reveal .controller pre code {
+                background-color: #FFB6B2;
+            }
+            .reveal .controller a {
+                color: #FFB6B2;
+            }
+        </style>
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h2>Backbone.js</h2>
+                    <img src="backbone.png" style="border:none; box-shadow:none; height:400px" />
+                    <p>
+                        <small>Povídání pro <a href="http://tkalci.cz/">Tkalce na webu</a> &mdash; <a href="mailto:michal@plovarna.cz">Michal Valoušek</a> &mdash; <a href="http://twitter.com/msgre">@msgre</a><br><br>
+                        <a href="https://github.com/msgre/backbone-talk">https://github.com/msgre/backbone-talk</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Jeremy Ashkenas</h2>
+                    <img src="jeremy_ashkenas2.png" style="border:none; box-shadow:none;height:400px" />
+                    <p>Backbone.js – Underscore.js – CoffeeScript – Docco</p>
+                    <aside class="notes">
+                        <p>Rdio, Quartz, Wordpress.com, Foursquare, Bitbucket,
+                        Disqus, Delicious, Khan Academy, Basecamp, Trello, Airbnb,
+                        SoundCloud, Stripe, USA Today, LinkedIn, Pinterest, BitTorrent,
+                        Digg</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <q>
+                        Backbone.js is a lightweight JavaScript library<br>that adds structure to your client-side code.<br>
+                        <div style="text-align:right;padding-right:4em;padding-top:1em">— Addy Osmani</div>
+                    </q>
+                    <aside class="notes">
+                        MVC - je softwarová architektura, která rozděluje
+                        datový model aplikace, uživatelské rozhraní a řídicí
+                        logiku do tří nezávislých komponent tak, že modifikace
+                        některé z nich má jen minimální vliv na ostatní.
+                    </aside>
+                </section>
+
+                <section>
+                    <h1><span class="circle" style="background-color:#35C0CD">M</span><span class="circle" style="background-color:#FFC140">V</span><span class="circle" style="background-color:#FF4940">C</span></h1>
+                </section>
+
+                <!-- MODEL ========================================= -->
+
+                <section data-background="#5EC4CD">
+                    <h1><span class="circle">M</span>VC</h1>
+                    <br>
+                    <h3>Backbone.Model + Backbone.Collection</h3>
+                </section>
+
+                <section data-background="#5EC4CD" class="model">
+                    <h1><span class="circle">M</span></h1>
+                    <p>Backbone.Model</p>
+                    <pre><code class="javascript">
+// definice modelu
+var Book = Backbone.Model.extend();
+
+// instance
+var model = new Book({title: 'Honzíkova cesta', author: 'Bohumil Říha'});
+                    </code></pre>
+                    <p><small><a href="dema/model1.html">Demo</a></small></p>
+                </section>
+
+                <section data-background="#5EC4CD" class="model">
+                    <h1><span class="circle">M</span></h1>
+                    <p>Backbone.Model</p>
+                    <pre><code class="javascript">
+var Book = Backbone.Model.extend({
+  // defaultni hodnoty
+  defaults: {
+    publisher: "Albatros",
+    tags: ["children"]
+  },
+
+  // metoda
+  get_isbn: function(){
+    // ...
+  }
+});
+                    </code></pre>
+                </section>
+
+                <section data-background="#5EC4CD" class="model">
+                    <h1><span class="circle">M</span></h1>
+                    <p>Backbone.Collection</p>
+                    <pre><code class="javascript">
+// definice modelu
+var Book = Backbone.Model.extend();
+
+// definice kolekce nad modelem
+var Library = Backbone.Collection.extend({
+  model: Book
+});
+
+// instance
+var model1 = new Book({title: 'Honzíkova cesta', author: 'Bohumil Říha'}),
+    model2 = new Book({title: 'Čuk a Gek', author: 'Arkadij Gajdar'}),
+    model3 = new Book({title: 'Malý Bobeš', author: 'Josef Věromír Pleva'});
+var collection = new Library([model1, model2, model3]);
+                    </code></pre>
+                    <p><small><a href="dema/model2.html">Demo</a></small></p>
+                </section>
+
+                <section data-background="#5EC4CD" class="model">
+                    <h1><span class="circle">M</span></h1>
+                    <p>Bonus &rarr; RESTové rozhraní za hubičku!</p>
+                    <pre><code class="javascript">
+// definice modelu
+var Book = Backbone.Model.extend({
+  //...
+  url: '/api/books/'
+});
+
+// definice kolekce
+var Library = Backbone.Collection.extend({
+  // ...
+  url: '/api/library/'
+});
+                    </code></pre>
+                    <p><small><a href="dema/model3.html">Demo</a></small></p>
+                </section>
+
+                <!-- VIEW ============================================== -->
+
+                <section data-background="#FFD273">
+                    <h1>M<span class="circle">V</span>C</h1>
+                    <br>
+                    <h3>Backbone.View</h3>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>Backbone.View</p>
+                    <pre><code class="html">
+&lt;body&gt;
+    &lt;div id="library"&gt;&lt;/div&gt;
+&lt;/body&gt;
+                    </code></pre>
+                    <pre><code class="javascript">
+var LibraryView = Backbone.View.extend({
+  el: '#library',
+  render: function() {
+    this.$el.html('<p>Knihovna u křupavého krabse</p>');
+    return this;
+  }
+});
+
+var view = new LibraryView();
+view.render();
+                    </code></pre>
+                    <p><small><a href="dema/view1.html">Demo</a></small></p>
+                </section>
+
+                <!--http://www.esquire.com/cm/esquire/images/sh/esq-cocktail-shaker-100110-xlg.jpg-->
+                <section data-background="shaker2.jpg">
+                    <h1 style="color:#fff;text-shadow: 2px 2px 20px #000;">Model + View</h1>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>Propojení modelu a view</p>
+                    <pre><code class="javascript">
+var Book = Backbone.Model.extend();
+var model = new Book({title: 'Honzíkova cesta', author: 'Bohumil Říha'});
+
+var LibraryView = Backbone.View.extend({
+  el: '#library',
+  initialize: function(options) {
+    this.model.on('change', function(){this.render()}, this);
+  },
+  render: function() {
+    this.$el.html('<p>'+this.model.get('title')+' ('+this.model.get('author')+')</p>');
+    return this;
+  }
+});
+var view = new LibraryView({model: model});
+view.render();
+                    </code></pre>
+                    <p><small><a href="dema/view2.html">Demo</a></small></p>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>Nasazení šablon</p>
+                    <pre><code class="javascript">
+var LibraryView = Backbone.View.extend({
+  // ...
+  template: _.template('<p><%= title %> (<%= author %>)</p>'),
+  render: function() {
+    this.$el.html(this.template(this.model.attributes));
+    return this;
+  }
+});
+                    </code></pre>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>View pro zobrazení kolekce</p>
+                    <pre><code class="javascript">
+CollectionBookView = Backbone.View.extend({
+    el: '#library',
+    template: _.template('<% _.each(collection, function(m) { %> \
+                          <li><strong><%= m.title %></strong> ( \
+                          <%= m.author %>)</li><% }) %>'),
+
+    initialize: function(options) {
+        this.collection.on("add remove", function(){this.render()}, this);
+    },
+    render: function() {
+        this.$el.html(this.template({collection: this.collection.attributes}));
+        return this;
+    },
+});
+                    </code></pre>
+                    <p><small><a href="dema/view3.html">Demo</a></small></p>
+                </section>
+
+                <!-- CONTROLLER ======================================== -->
+
+                <section data-background="#FF7A73" data-transition="none">
+                    <h1>MV<span class="circle">C</span></h1>
+                    <br>
+                    <h3 class="fragment">Controller?</h3>
+                </section>
+
+                <section data-background="#FF7A73" data-transition="none">
+                    <h1>MV<span class="circle">C</span></h1>
+                    <br>
+                    <h3 class="strikeout">Controller?</h3>
+                </section>
+
+                <section data-background="#FF7A73">
+                    <h1>MV<span class="circle">C</span></h1>
+                    <br>
+                    <h3>Backbone.View + Backbone.Router</h3>
+                </section>
+
+                <section data-background="#FF7A73" class="controller">
+                    <h1><span class="circle">C</span></h1>
+                    <p>Backbone.Router</p>
+                    <pre><code class="javascript">
+// nastaveni routovani
+var Router = Backbone.Router.extend({
+  routes: {
+    "activate/:id":  "activate"
+  },
+  activate: function(id) {
+    // do something...
+  }
+});
+router = new Router();
+
+// spusteni history API
+Backbone.history.start();
+                    </code></pre>
+                </section>
+
+                <!-- KOMPLETNI APPKA =================================== -->
+
+                <!-- http://media.novinky.cz/140/371400-original1-35lvf.jpg -->
+                <section data-background="barman.jpg">
+                    <h1 style="font-size:280%;text-shadow: 2px 2px 20px #000;"><a style="color:#fff" href="dema/complete.html">Demo</a></h1>
+                </section>
+
+                <!-- MARIONETTA ======================================== -->
+
+                <section>
+                    <img src="logo-marionette.png" style="border:none; box-shadow:none; height:400px" />
+                    <br><br>
+                    <p>Derick Bailey</p>
+                </section>
+
+                <section>
+                    <q>
+                        It is a collection of common design and implementation
+                        patterns found in the applications that I  have been
+                        building with Backbone, and includes various pieces
+                        inspired by composite application architectures, such
+                        as Microsoft's "Prism" framework.
+                        <div style="text-align:right;padding-top:1em">— Derick Bailey</div>
+
+                    </q>
+                    <aside class="notes">
+                        backbone je volny az moc; s marionettou
+                        alternativy chaplin, thorax,
+                        svoboda ale porad je, neni nutne pouzivat vse/nic
+                    </aside>
+                </section>
+
+                <!-- MARIONETTI VIEW =================================== -->
+                <section data-background="#FFD273">
+                    <h1><span class="circle">V</span>iews</h1>
+                    <br>
+                    <p>
+                        Marionette.ItemView<br>
+                        Marionette.CollectionView<br>
+                        Marionette.CompositeView<br>
+                        Marionette.Layout
+                    </p>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>Marionette.ItemView</p>
+                    <pre><code class="javascript">
+var BookView = Backbone.Marionette.ItemView.extend({
+  tagName: 'li',
+  template: _.template('<strong><%= title %></strong> (<%= author %>)')
+});
+
+var view = new BookView({model: model});
+view.render();
+                    </code></pre>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>Marionette.CollectionView</p>
+                    <pre><code class="html">
+&lt;body&gt;
+  &lt;ul id="library"&gt;&lt;/ul&gt;
+&lt;/body&gt;
+                    </code></pre>
+                    <pre><code class="javascript">
+var CollectionBookView = Backbone.Marionette.CollectionView.extend({
+  el: '#library',
+  itemView: BookView
+});
+
+var view = new CollectionBookView({collection: collection});
+view.render();
+                    </code></pre>
+                    <p><small><a href="dema/view4.html">Demo</a></small></p>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>Marionette.CompositeView</p>
+                    <pre><code class="javascript">
+var CompositeBookView = Backbone.Marionette.CompositeView.extend({
+  el: '#library',
+  itemView: BookView,
+  itemViewContainer: 'ul',
+  template: _.template('<h3>V roce <%= today.getFullYear() %> děckám kupte:</h3> \
+                        <ul></ul><p>Neprohloupíte, fakt!</p>')
+});
+
+var view = new CompositeBookView({
+  collection: collection,
+  model: new Backbone.Model({today: new Date()})
+});
+view.render();
+                    </code></pre>
+                    <p><small><a href="dema/view5.html">Demo</a></small></p>
+                </section>
+
+                <section data-background="#FFD273" class="view">
+                    <h1><span class="circle">V</span></h1>
+                    <p>Marionette.Layout</p>
+                    <pre><code class="javascript">
+var Layout = Backbone.Marionette.Layout.extend({
+  template: _.template('<div><p id="menu"></p><ul id="content"></p></div>'),
+  regions: {
+    menu: "#menu",
+    content: "#content"
+  }
+});
+
+var layout = new Layout();
+layout.render();
+
+layout.menu.show(new MenuView());
+layout.content.show(new ContentView());
+                    </code></pre>
+                </section>
+
+                <!-- MARIONETTI EVENTY ================================= -->
+                <section class="events" data-background="#58C96C" class="events">
+                    <h1><span class="circle">E</span>vents</h1>
+                    <br>
+                    <p>
+                        Marionette.Commands<br>
+                        Marionette.RequestResponse<br>
+                        Backbone.Wreqr.EventAggregator
+                    </p>
+                </section>
+
+                <section class="events" data-background="#58C96C" class="events">
+                    <h1><span class="circle">E</span></h1>
+                    <p>Marionette.Commands</p>
+                    <pre><code class="javascript">
+var App = new Marionette.Application();
+
+App.commands.setHandler("prikaz", function(arg){
+  console.log(arg);
+});
+
+App.execute("prikaz", "parametr");
+                    </code></pre>
+                </section>
+
+                <section class="events" data-background="#58C96C" class="events">
+                    <h1><span class="circle">E</span></h1>
+                    <p>Marionette.RequestResponse</p>
+                    <pre><code class="javascript">
+var App = new Marionette.Application();
+
+App.reqres.setHandler("request", function(arg){
+  return arg + "-suffix";
+});
+
+App.request("request", "parametr");
+                    </code></pre>
+                </section>
+
+                <section class="events" data-background="#58C96C" class="events">
+                    <h1><span class="circle">E</span></h1>
+                    <p>Backbone.Wreqr.EventAggregator</p>
+                    <pre><code class="javascript">
+var App = new Backbone.Marionette.Application();
+
+App.vent.on("signal", function(){
+  alert("Signal se stal...");
+});
+
+App.vent.trigger("signal");
+                    </code></pre>
+                </section>
+
+                <!-- MARIONETTI ZBYTEK ================================= -->
+                <section>
+                    <h1>A další...</h1>
+                    <br>
+                    <p>
+                        Marionette.Controller<br>
+                        Marionette.Module<br>
+                        Marionette.Application<br>
+                        Marionette.Region
+                    </p>
+                    <br>
+                    <p><small><a href="dema/complete2.html">Demo</a></small></p>
+                </section>
+
+                <section>
+                    <h3>Díky za pozornost</h3>
+                </section>
+            </div>
+
+        </div>
+
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+        <script src="jquery.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'simple', // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() {
+                        $(document).ready(function(){
+                            $('code').each(function(i, e) {hljs.highlightBlock(e)});
+                        });
+                        //hljs.initHighlightingOnLoad();
+                    } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
